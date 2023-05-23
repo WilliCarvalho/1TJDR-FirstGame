@@ -5,9 +5,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player instance;
+   
     private Transform playerTransform;
     private Rigidbody2D rigidbody;
     private bool isOnFloor = true;
+
 
     [Header("Player movement")]
     [SerializeField] private float velocity = 10;
@@ -15,6 +18,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         playerTransform = GetComponent<Transform>();
         rigidbody = GetComponent<Rigidbody2D>();
     }
@@ -54,8 +58,14 @@ public class Player : MonoBehaviour
         {
             c.a = alpha;
             GetComponent<Renderer>().material.color = c;
-            yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(.01f);
         }
+        GameManager.instance.OnGameOnver();
         Destroy(gameObject);
+    }
+
+    public Transform GetPlayerTransform()
+    {
+        return playerTransform;
     }
 }

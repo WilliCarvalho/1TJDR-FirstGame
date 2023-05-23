@@ -14,12 +14,18 @@ public class Bullet : MonoBehaviour
 
     private IEnumerator LifeSpan()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
 
     void Update()
     {
         transform.Translate(Vector3.right * bulletVelocity * Time.deltaTime);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("colliding");
+        Destroy(gameObject);
     }
 }
